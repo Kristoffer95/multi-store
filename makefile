@@ -24,3 +24,6 @@ down:
 # storyblok
 sb-generate-types:
 	npm run storyblok:generate-types
+
+shadcn-add:
+	npx shadcn-ui@latest add

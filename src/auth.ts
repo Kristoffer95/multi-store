@@ -15,9 +15,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [GitHub],
   callbacks: {
     // NOTE: to customize redirect
-    // redirect(params) {
-    //   return '/';
-    // },
+    redirect(params) {
+      return '/profile';
+    },
     authorized({ request, auth }) {
       return true;
     },

@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { isMobilePhone } from 'validator';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -15,8 +16,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-
-import { isMobilePhone } from 'validator';
+import { navigate } from './action';
 
 const formSchema = z.object({
   username: z.string().min(3, {
@@ -40,18 +40,21 @@ export default function RegisterForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: '',
-      storeName: '',
-      storeAddress: '',
+      username: 'username',
+      phoneNumber: '1234567',
+      homeAddress: 'sdfsf',
+      storeName: 'fsfsf',
+      storeAddress: 'ssfsfd',
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    navigate(values);
   }
 
   return (
-    <div className='max-w-[500px] w-full px-10 py-16 rounded-2xl bg-background'>
+    <div className='max-w-[500px] w-full px-10 py-16 rounded-2xl bg-background border'>
       <h1 className='text-center pb-10 text-3xl font-medium uppercase tracking-wide'>
         Create Store
       </h1>
@@ -66,7 +69,7 @@ export default function RegisterForm() {
                 <FormItem className='flex-1'>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder='shadcn' {...field} />
+                    <Input placeholder='@username' {...field} />
                   </FormControl>
                   <FormDescription>
                     This must be unique and at least 5 characters long.
@@ -134,7 +137,7 @@ export default function RegisterForm() {
               </FormItem>
             )}
           />
-          <Button type='submit'>Register</Button>
+          <Button type='submit'>Create</Button>
         </form>
       </Form>
     </div>

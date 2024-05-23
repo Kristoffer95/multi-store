@@ -13,15 +13,24 @@ const config = {
   prefix: '',
   theme: {
     container: {
+      // https://tailwindcss.com/docs/container
       center: true,
-      padding: '2rem',
-      screens: {
-        '2xl': '1400px',
+      padding: {
+        DEFAULT: '22px',
+        md: '40px',
+        xl: '50px',
       },
+    },
+    screens: {
+      sm: '480px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1200px',
+      xxl: '1440px',
     },
     extend: {
       fontFamily: {
-        sans: ['var(--font-sans)', ...fontFamily.sans],
+        sans: ['var(--font-geist-sans)', ...fontFamily.sans],
       },
       colors: {
         border: 'hsl(var(--border))',
