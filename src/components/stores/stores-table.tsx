@@ -10,6 +10,12 @@ import {
 } from '@/components/ui/table';
 import { SquareArrowOutDownRight, SquareArrowOutUpRight } from 'lucide-react';
 import Link from 'next/link';
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 
 const invoices = [
   {
@@ -58,39 +64,50 @@ const invoices = [
 
 export default function StoresTable() {
   return (
-    <Table>
-      <TableCaption>A list of your stores.</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className='w-[100px]'>ID</TableHead>
-          <TableHead>Name</TableHead>
-          <TableHead className='text-center'>Pending Orders</TableHead>
-          <TableHead className='text-center'>Successful Orders</TableHead>
-          <TableHead className='text-right'>{`Today's Income`}</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {invoices.map((invoice, index) => (
-          <TableRow key={index}>
-            <TableCell className='font-medium'>{index + 1}</TableCell>
-            <TableCell className='flex items-center justify-between'>
-              Store Name
-              <Link href={`/stores/${index + 1}`}>
-                <SquareArrowOutUpRight className='h-[1.2rem] w-[1.2rem] ' />
-              </Link>
-            </TableCell>
-            <TableCell className='text-center'>2</TableCell>
-            <TableCell className='text-center'>5</TableCell>
-            <TableCell className='text-right'>{invoice.totalAmount}</TableCell>
+    <Card className='p-4'>
+      <CardHeader>
+        <CardTitle>Stores</CardTitle>
+        <CardDescription>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </CardDescription>
+      </CardHeader>
+
+      <Table>
+        <TableCaption>A list of your stores.</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead className='w-[100px]'>ID</TableHead>
+            <TableHead>Name</TableHead>
+            <TableHead className='text-center'>Pending Orders</TableHead>
+            <TableHead className='text-center'>Successful Orders</TableHead>
+            <TableHead className='text-right'>{`Today's Income`}</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TableCell colSpan={4}>Total</TableCell>
-          <TableCell className='text-right'>$2,500.00</TableCell>
-        </TableRow>
-      </TableFooter>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {invoices.map((invoice, index) => (
+            <TableRow key={index}>
+              <TableCell className='font-medium'>{index + 1}</TableCell>
+              <TableCell className='flex items-center justify-between'>
+                Store Name
+                <Link href={`/dashboard/stores/${index + 1}`}>
+                  <SquareArrowOutUpRight className='h-[1.2rem] w-[1.2rem] ' />
+                </Link>
+              </TableCell>
+              <TableCell className='text-center'>2</TableCell>
+              <TableCell className='text-center'>5</TableCell>
+              <TableCell className='text-right'>
+                {invoice.totalAmount}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell colSpan={4}>Total</TableCell>
+            <TableCell className='text-right'>$2,500.00</TableCell>
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </Card>
   );
 }

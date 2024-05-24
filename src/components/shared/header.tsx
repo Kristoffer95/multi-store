@@ -6,10 +6,9 @@ async function Header() {
   const session = await auth();
 
   return (
-    <div className='border-b border-muted-foreground/50 py-5'>
+    <div className='border-b border-muted-foreground/50 py-5 md:ml-8 hd:ml-0'>
       <div className='container'>
         <div className='flex items-center justify-between'>
-          {/* left section */}
           <div>
             <Link className='text-sm font-medium' href='/'>
               Home
@@ -20,9 +19,6 @@ async function Header() {
           <div className='flex items-center gap-5'>
             <Link className='text-sm font-medium' href='/dashboard'>
               Dashboard
-            </Link>
-            <Link className='text-sm font-medium' href='/stores'>
-              Stores
             </Link>
             <Link className='text-sm font-medium' href='/profile'>
               Profile

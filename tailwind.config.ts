@@ -27,10 +27,12 @@ const config = {
       lg: '1024px',
       xl: '1200px',
       xxl: '1440px',
+      // hd:  '1920px',
     },
     extend: {
       fontFamily: {
         sans: ['var(--font-geist-sans)', ...fontFamily.sans],
+        mono: ['var(--font-geist-mono)', ...fontFamily.sans],
       },
       colors: {
         border: 'hsl(var(--border))',
