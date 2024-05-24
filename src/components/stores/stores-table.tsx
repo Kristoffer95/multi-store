@@ -64,7 +64,7 @@ const invoices = [
 
 export default function StoresTable() {
   return (
-    <Card className='p-4'>
+    <Card className='p-4 pt-0'>
       <CardHeader>
         <CardTitle>Stores</CardTitle>
         <CardDescription>
