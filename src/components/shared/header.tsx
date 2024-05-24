@@ -18,8 +18,8 @@ async function Header() {
 
           {/* right section */}
           <div className='flex items-center gap-5'>
-            <Link className='text-sm font-medium' href='/shadcn'>
-              Shadcn
+            <Link className='text-sm font-medium' href='/dashboard'>
+              Dashboard
             </Link>
             <Link className='text-sm font-medium' href='/stores'>
               Stores
