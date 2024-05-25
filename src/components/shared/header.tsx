@@ -6,7 +6,7 @@ async function Header() {
   const session = await auth();
 
   return (
-    <div className='border-b border-muted-foreground/50 py-5 md:ml-8 hd:ml-0'>
+    <div className='py-2 md:ml-8 hd:ml-0'>
       <div className='container'>
         <div className='flex items-center justify-between'>
           <div>

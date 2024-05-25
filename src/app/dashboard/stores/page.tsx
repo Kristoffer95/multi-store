@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 async function ProfilePage() {
   return (
-    <div className='md:ml-8'>
+    <>
       <div className='flex justify-end pb-4 py-4 sm:pt-0'>
         <Link href='/create-store'>
           <Button size='sm' className='h-7 gap-1'>
@@ -21,7 +21,7 @@ async function ProfilePage() {
         </Link>
       </div>
       <StoresTable />
-    </div>
+    </>
   );
 }
 

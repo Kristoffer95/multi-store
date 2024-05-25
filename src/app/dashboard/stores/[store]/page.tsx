@@ -1,4 +1,11 @@
 import { StoreDataTable } from '@/components/stores/store/store-data-table';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 
 function StorePage({
   params,
@@ -8,8 +15,18 @@ function StorePage({
   };
 }) {
   return (
-    <div className='bg-card px-10 py-10 rounded-2xl'>
-      <StoreDataTable />
+    <div className=' rounded-2xl'>
+      <Card>
+        <CardHeader>
+          <CardTitle>Store Products</CardTitle>
+          <CardDescription>
+            Manage your products and view their sales performance.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <StoreDataTable />
+        </CardContent>
+      </Card>
     </div>
   );
 }

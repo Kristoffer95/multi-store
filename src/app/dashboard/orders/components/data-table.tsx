@@ -69,8 +69,11 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className='space-y-4'>
-      <DataTableToolbar table={table} />
+      <DataTableToolbar table={table} sorting={sorting} />
       <div className='rounded-md border'>
+        <div className='w-full border'>
+          {/* <pre>{JSON.stringify(table.getRowModel().rows, null, 2)}</pre> */}
+        </div>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

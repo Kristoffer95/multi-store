@@ -88,10 +88,12 @@ export default function StoresTable() {
             <TableRow key={index}>
               <TableCell className='font-medium'>{index + 1}</TableCell>
               <TableCell className='flex items-center justify-between'>
-                Store Name
-                <Link href={`/dashboard/stores/${index + 1}`}>
-                  <SquareArrowOutUpRight className='h-[1.2rem] w-[1.2rem] ' />
+                <Link
+                  href={`/dashboard/stores/${index + 1}`}
+                  className='hover:underline underline-offset-2'>
+                  Store Name
                 </Link>
+                {/* <SquareArrowOutUpRight className='h-[1.2rem] w-[1.2rem] ' /> */}
               </TableCell>
               <TableCell className='text-center'>2</TableCell>
               <TableCell className='text-center'>5</TableCell>
