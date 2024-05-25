@@ -1,12 +1,14 @@
-import { auth } from '@/auth';
+import { signOut } from '@/actions/auth';
+import LogoutButton from './logout-button';
 import { ThemeToggleButton } from './theme-toggle-button';
 import Link from 'next/link';
+import { getUser } from '@/actions/user';
 
 async function Header() {
-  const session = await auth();
+  const user = await getUser();
 
   return (
-    <div className='py-2 md:ml-8 hd:ml-0'>
+    <div className='py-2 md:ml-8'>
       <div className='container'>
         <div className='flex items-center justify-between'>
           <div>
@@ -23,11 +25,20 @@ async function Header() {
             <Link className='text-sm font-medium' href='/profile'>
               Profile
             </Link>
-            {!session && (
-              <Link className='text-sm font-medium' href='/api/auth/signin'>
+
+            {user && Object.keys(user).length > 0 ? (
+              <LogoutButton
+                signOut={async () => {
+                  'use server';
+                  await signOut();
+                }}
+              />
+            ) : (
+              <Link className='text-sm font-medium' href='/login'>
                 Login
               </Link>
             )}
+
             <ThemeToggleButton />
           </div>
         </div>
