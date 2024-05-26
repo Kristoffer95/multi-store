@@ -8,17 +8,17 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
+  // DropdownMenuRadioGroup,
+  // DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
+  // DropdownMenuSub,
+  // DropdownMenuSubContent,
+  // DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-import { labels } from './data/data';
+// import { labels } from './data/data';
 import { productSchema } from './data/schema';
 
 interface DataTableRowActionsProps<TData> {
@@ -45,10 +45,10 @@ export default function OrdersTableRowActions<TData>({
         <DropdownMenuItem>Make a copy</DropdownMenuItem>
         <DropdownMenuItem>Favorite</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuSub>
+        {/* <DropdownMenuSub>
           <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup value={task.label}>
+            <DropdownMenuRadioGroup value={task.name}>
               {labels.map((label) => (
                 <DropdownMenuRadioItem key={label.value} value={label.value}>
                   {label.label}
@@ -56,7 +56,7 @@ export default function OrdersTableRowActions<TData>({
               ))}
             </DropdownMenuRadioGroup>
           </DropdownMenuSubContent>
-        </DropdownMenuSub>
+        </DropdownMenuSub> */}
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           Delete

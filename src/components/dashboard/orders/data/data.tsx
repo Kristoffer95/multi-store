@@ -1,30 +1,9 @@
 import {
-  ArrowDownIcon,
-  ArrowRightIcon,
-  ArrowUpIcon,
   CheckCircledIcon,
-  CircleIcon,
   CrossCircledIcon,
-  PersonIcon,
-  QuestionMarkCircledIcon,
   StopwatchIcon,
 } from '@radix-ui/react-icons';
-import { Bike, CircleCheckBig, CircleX, Wifi } from 'lucide-react';
-
-export const labels = [
-  {
-    value: 'bug',
-    label: 'Bug',
-  },
-  {
-    value: 'feature',
-    label: 'Feature',
-  },
-  {
-    value: 'documentation',
-    label: 'Documentation',
-  },
-];
+import { CircleCheckBig, CircleDollarSign, CircleX, Wifi } from 'lucide-react';
 
 export const orderStatuses = [
   {
@@ -66,6 +45,6 @@ export const paymentTypes = [
   {
     label: 'Cash',
     value: 'cash',
-    icon: PersonIcon,
+    icon: CircleDollarSign,
   },
 ];

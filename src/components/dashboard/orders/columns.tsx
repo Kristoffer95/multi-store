@@ -69,20 +69,8 @@ export const columns: ColumnDef<Product>[] = [
       <OrdersTableColumnHeader column={column} title='Order TIme' />
     ),
     cell: ({ row }) => {
-      // const status = statuses.find(
-      //   (status) => status.value === row.getValue('orderTime')
-      // );
-
-      // if (!status) {
-      //   return null;
-      // }
-
       return (
         <div className='flex w-[100px] items-center'>
-          {/* {status.icon && (
-            <status.icon className='mr-2 h-4 w-4 text-muted-foreground' />
-          )}
-          <span>{status.label}</span> */}
           {row.getValue('orderTime')}
         </div>
       );
@@ -97,21 +85,20 @@ export const columns: ColumnDef<Product>[] = [
       <OrdersTableColumnHeader column={column} title='Order Status' />
     ),
     cell: ({ row }) => {
-      // const priority = priorities.find(
-      //   (priority) => priority.value === row.getValue('priority')
-      // );
-
-      // if (!priority) {
-      //   return null;
-      // }
+      const status: 'in progress' | 'done' | 'cancelled' =
+        row.getValue('orderStatus');
 
       return (
         <div className='flex items-center'>
-          {/* {priority.icon && (
-            <priority.icon className='mr-2 h-4 w-4 text-muted-foreground' />
-          )} */}
-          {/* <span>{priority.label}</span> */}
-          {row.getValue('orderStatus')}
+          {status === 'in progress' && (
+            <Badge variant='default'>In Progress</Badge>
+          )}
+
+          {status === 'done' && <Badge variant='outline'>Done</Badge>}
+
+          {status === 'cancelled' && (
+            <Badge variant='destructive'>Cancelled</Badge>
+          )}
         </div>
       );
     },
