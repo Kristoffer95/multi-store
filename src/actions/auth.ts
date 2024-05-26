@@ -1,8 +1,51 @@
 'use server';
 import { createClient } from '@/utils/supabase/server';
+import { supabaseWrapper } from '@/utils/supabase/supabase-wrapper';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
-export async function signOut() {
+export async function signOutAction() {
   const supabase = createClient();
 
   await supabase.auth.signOut();
+}
+
+export async function loginAction(formData: FormData) {
+  const supabase = supabaseWrapper('server');
+
+  // type-casting here for convenience
+  // in practice, you should validate your inputs
+  const data = {
+    email: formData.get('email') as string,
+    password: formData.get('password') as string,
+  };
+
+  const { error } = await supabase.auth.signInWithPassword(data);
+
+  if (error) {
+    redirect('/error');
+  }
+
+  revalidatePath('/', 'layout');
+  redirect('/profile');
+}
+
+export async function signupAction(formData: FormData) {
+  const supabase = supabaseWrapper('server');
+
+  // type-casting here for convenience
+  // in practice, you should validate your inputs
+  const data = {
+    email: formData.get('email') as string,
+    password: formData.get('password') as string,
+  };
+
+  const { error } = await supabase.auth.signUp(data);
+
+  if (error) {
+    redirect('/error');
+  }
+
+  revalidatePath('/', 'layout');
+  redirect('/');
 }

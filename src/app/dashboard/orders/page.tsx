@@ -1,13 +1,11 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { Metadata } from 'next';
-import Image from 'next/image';
 import { z } from 'zod';
 
-import { columns } from './components/columns';
-import { DataTable } from './components/data-table';
-import { UserNav } from './components/user-nav';
-import { taskSchema } from './data/schema';
+import { columns } from '@/components/dashboard/orders/columns';
+import { DataTable } from '@/components/dashboard/orders/data-table';
+import { taskSchema } from '@/components/dashboard/orders/data/schema';
 import {
   Card,
   CardDescription,
@@ -37,17 +35,6 @@ export default async function DashboardOrdersPage() {
   return (
     <>
       <div className='h-full flex-1 flex-col space-y-8 py-8 flex'>
-        {/* <div className='flex items-center justify-between space-y-2'>
-          <div>
-            <h2 className='text-2xl font-bold tracking-tight'>Orders</h2>
-            <p className='text-muted-foreground'>
-              Here&apos;s a list of active orders!
-            </p>
-          </div>
-          <div className='flex items-center space-x-2'>
-            <UserNav />
-          </div>
-        </div> */}
         <Card className='p-8 pt-2'>
           <CardHeader className='px-0'>
             <CardTitle>Orders</CardTitle>

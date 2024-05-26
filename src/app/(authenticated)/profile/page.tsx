@@ -1,14 +1,13 @@
 import { redirect } from 'next/navigation';
 
-import { createClient } from '@/utils/supabase/server';
+import { getUserAction } from '@/actions/user';
 
 export default async function ProfilePage() {
-  const supabase = createClient();
+  const user = await getUserAction();
 
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data?.user) {
+  if (!user) {
     redirect('/login');
   }
 
-  return <p>Hello {data.user.email}</p>;
+  return <p>Hello {user.email}</p>;
 }

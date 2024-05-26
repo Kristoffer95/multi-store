@@ -1,4 +1,4 @@
-import { login, signup } from './actions';
+import { loginAction, signupAction } from '@/actions/auth';
 
 export default function LoginPage() {
   return (
@@ -20,8 +20,8 @@ export default function LoginPage() {
         defaultValue={'Password!23'}
       />
       <div className='flex justify-between'>
-        <button formAction={login}>Log in</button>
-        <button formAction={signup}>Sign up</button>
+        <button formAction={loginAction}>Log in</button>
+        <button formAction={signupAction}>Sign up</button>
       </div>
     </form>
   );

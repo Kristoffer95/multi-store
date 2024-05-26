@@ -1,14 +1,14 @@
-import { signOut } from '@/actions/auth';
+import { signOutAction } from '@/actions/auth';
 import LogoutButton from './logout-button';
 import { ThemeToggleButton } from './theme-toggle-button';
 import Link from 'next/link';
-import { getUser } from '@/actions/user';
+import { getUserAction } from '@/actions/user';
 
 async function Header() {
-  const user = await getUser();
+  const user = await getUserAction();
 
   return (
-    <div className='py-2 md:ml-8'>
+    <div className='py-2 md:ml-8 bg-background'>
       <div className='container'>
         <div className='flex items-center justify-between'>
           <div>
@@ -30,7 +30,7 @@ async function Header() {
               <LogoutButton
                 signOut={async () => {
                   'use server';
-                  await signOut();
+                  await signOutAction();
                 }}
               />
             ) : (
