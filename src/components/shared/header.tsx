@@ -8,7 +8,7 @@ async function Header() {
   const user = await getUserAction();
 
   return (
-    <div className='py-2 md:ml-8 bg-background'>
+    <div className='py-2 md:pl-8 bg-background'>
       <div className='container'>
         <div className='flex items-center justify-between'>
           <div>

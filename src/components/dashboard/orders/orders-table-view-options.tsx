@@ -12,6 +12,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
+import splitWords from '@/utils/splitWords';
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>;
@@ -32,8 +33,9 @@ export default function OrdersTableViewOptions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-[150px]'>
-        <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+        <DropdownMenuLabel>Filter View</DropdownMenuLabel>
         <DropdownMenuSeparator />
+
         {table
           .getAllColumns()
           .filter(
@@ -47,7 +49,10 @@ export default function OrdersTableViewOptions<TData>({
                 className='capitalize'
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}>
-                {column.id}
+                {/* <pre>{JSON.stringify(column, null, 2)}</pre> */}
+                <span className='whitespace-nowrap'>
+                  {splitWords(column.id)}
+                </span>
               </DropdownMenuCheckboxItem>
             );
           })}

@@ -5,12 +5,12 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 
-import { labels, priorities, statuses } from './data/data';
-import { Task } from './data/schema';
+// import { labels, priorities, statuses } from './data/data';
+import { Product } from './data/schema';
 import OrdersTableColumnHeader from './orders-table-column-header';
 import OrdersTableRowActions from './orders-table-row-actions';
 
-export const columns: ColumnDef<Task>[] = [
+export const columns: ColumnDef<Product>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -38,50 +38,52 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: 'id',
     header: ({ column }) => (
-      <OrdersTableColumnHeader column={column} title='Product SKU' />
+      <OrdersTableColumnHeader column={column} title='Order ID' />
     ),
     cell: ({ row }) => <div className='w-[80px]'>{row.getValue('id')}</div>,
     // enableSorting: false,
     // enableHiding: false,
   },
   {
-    accessorKey: 'title',
+    accessorKey: 'name',
     header: ({ column }) => (
-      <OrdersTableColumnHeader column={column} title='Title' />
+      <OrdersTableColumnHeader column={column} title='Name' />
     ),
     cell: ({ row }) => {
-      const label = labels.find((label) => label.value === row.original.label);
+      // const label = labels.find((label) => label.value === row.original.label);
 
       return (
         <div className='flex space-x-2'>
-          {label && <Badge variant='outline'>{label.label}</Badge>}
-          <span className='max-w-[500px] truncate font-medium'>
+          Product Name
+          {/* {label && <Badge variant='outline'>{label.label}</Badge>} */}
+          {/* <span className='max-w-[500px] truncate font-medium'>
             {row.getValue('title')}
-          </span>
+          </span> */}
         </div>
       );
     },
   },
   {
-    accessorKey: 'status',
+    accessorKey: 'orderTime',
     header: ({ column }) => (
-      <OrdersTableColumnHeader column={column} title='Status' />
+      <OrdersTableColumnHeader column={column} title='Order TIme' />
     ),
     cell: ({ row }) => {
-      const status = statuses.find(
-        (status) => status.value === row.getValue('status')
-      );
+      // const status = statuses.find(
+      //   (status) => status.value === row.getValue('orderTime')
+      // );
 
-      if (!status) {
-        return null;
-      }
+      // if (!status) {
+      //   return null;
+      // }
 
       return (
         <div className='flex w-[100px] items-center'>
-          {status.icon && (
+          {/* {status.icon && (
             <status.icon className='mr-2 h-4 w-4 text-muted-foreground' />
           )}
-          <span>{status.label}</span>
+          <span>{status.label}</span> */}
+          {row.getValue('orderTime')}
         </div>
       );
     },
@@ -90,26 +92,55 @@ export const columns: ColumnDef<Task>[] = [
     },
   },
   {
-    accessorKey: 'priority',
+    accessorKey: 'orderStatus',
     header: ({ column }) => (
-      <OrdersTableColumnHeader column={column} title='Priority' />
+      <OrdersTableColumnHeader column={column} title='Order Status' />
     ),
     cell: ({ row }) => {
-      const priority = priorities.find(
-        (priority) => priority.value === row.getValue('priority')
-      );
+      // const priority = priorities.find(
+      //   (priority) => priority.value === row.getValue('priority')
+      // );
 
-      if (!priority) {
-        return null;
-      }
+      // if (!priority) {
+      //   return null;
+      // }
 
       return (
         <div className='flex items-center'>
-          {priority.icon && (
+          {/* {priority.icon && (
             <priority.icon className='mr-2 h-4 w-4 text-muted-foreground' />
-          )}
-          <span>{priority.label}</span>
+          )} */}
+          {/* <span>{priority.label}</span> */}
+          {row.getValue('orderStatus')}
         </div>
+      );
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
+  },
+  {
+    accessorKey: 'paymentType',
+    header: ({ column }) => (
+      <OrdersTableColumnHeader column={column} title='Payment Type' />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className='flex items-center'>{row.getValue('paymentType')}</div>
+      );
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
+  },
+  {
+    accessorKey: 'paymentStatus',
+    header: ({ column }) => (
+      <OrdersTableColumnHeader column={column} title='Payment Status' />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className='flex items-center'>{row.getValue('paymentStatus')}</div>
       );
     },
     filterFn: (row, id, value) => {

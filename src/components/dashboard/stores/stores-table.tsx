@@ -8,7 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { SquareArrowOutDownRight, SquareArrowOutUpRight } from 'lucide-react';
 import Link from 'next/link';
 import {
   Card,
@@ -93,7 +92,6 @@ export default function StoresTable() {
                   className='hover:underline underline-offset-2'>
                   Store Name
                 </Link>
-                {/* <SquareArrowOutUpRight className='h-[1.2rem] w-[1.2rem] ' /> */}
               </TableCell>
               <TableCell className='text-center'>2</TableCell>
               <TableCell className='text-center'>5</TableCell>

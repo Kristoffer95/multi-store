@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import OrdersTableViewOptions from './orders-table-view-options';
 
-import { priorities, statuses } from './data/data';
+import { paymentStatuses, orderStatuses, paymentTypes } from './data/data';
 import OrdersTableFacetedFilter from './orders-table-faceted-filter';
 
 interface DataTableToolbarProps<TData> {
@@ -24,27 +24,34 @@ export default function OrdersTableToolbar<TData>({
 
   return (
     <div className='flex items-center justify-between'>
-      <div className='flex flex-1 items-center space-x-2'>
+      <div className='flex flex-1 items-center gap-2 flex-wrap'>
         <Input
-          placeholder='Filter tasks...'
-          value={(table.getColumn('title')?.getFilterValue() as string) ?? ''}
+          placeholder='Filter Orders'
+          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
-            table.getColumn('title')?.setFilterValue(event.target.value)
+            table.getColumn('name')?.setFilterValue(event.target.value)
           }
           className='h-8 w-[150px] lg:w-[250px]'
         />
-        {table.getColumn('status') && (
+        {table.getColumn('orderStatus') && (
           <OrdersTableFacetedFilter
-            column={table.getColumn('status')}
-            title='Status'
-            options={statuses}
+            column={table.getColumn('orderStatus')}
+            title='Order Status'
+            options={orderStatuses}
           />
         )}
-        {table.getColumn('priority') && (
+        {table.getColumn('paymentType') && (
           <OrdersTableFacetedFilter
-            column={table.getColumn('priority')}
-            title='Priority'
-            options={priorities}
+            column={table.getColumn('paymentType')}
+            title='Payment Type'
+            options={paymentTypes}
+          />
+        )}
+        {table.getColumn('paymentStatus') && (
+          <OrdersTableFacetedFilter
+            column={table.getColumn('paymentStatus')}
+            title='Payment Status'
+            options={paymentStatuses}
           />
         )}
         {isFiltered && (

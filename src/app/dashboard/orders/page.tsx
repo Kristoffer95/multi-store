@@ -5,7 +5,7 @@ import { z } from 'zod';
 
 import { columns } from '@/components/dashboard/orders/columns';
 import OrdersTable from '@/components/dashboard/orders/orders-table';
-import { taskSchema } from '@/components/dashboard/orders/data/schema';
+import { productSchema } from '@/components/dashboard/orders/data/schema';
 import {
   Card,
   CardDescription,
@@ -26,7 +26,7 @@ async function getTasks() {
 
   const tasks = JSON.parse(data.toString());
 
-  return z.array(taskSchema).parse(tasks);
+  return z.array(productSchema).parse(tasks);
 }
 
 export default async function DashboardOrdersPage() {

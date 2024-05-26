@@ -5,9 +5,11 @@ import {
   CheckCircledIcon,
   CircleIcon,
   CrossCircledIcon,
+  PersonIcon,
   QuestionMarkCircledIcon,
   StopwatchIcon,
 } from '@radix-ui/react-icons';
+import { Bike, CircleCheckBig, CircleX, Wifi } from 'lucide-react';
 
 export const labels = [
   {
@@ -24,17 +26,7 @@ export const labels = [
   },
 ];
 
-export const statuses = [
-  {
-    value: 'backlog',
-    label: 'Backlog',
-    icon: QuestionMarkCircledIcon,
-  },
-  {
-    value: 'todo',
-    label: 'Todo',
-    icon: CircleIcon,
-  },
+export const orderStatuses = [
   {
     value: 'in progress',
     label: 'In Progress',
@@ -46,26 +38,34 @@ export const statuses = [
     icon: CheckCircledIcon,
   },
   {
-    value: 'canceled',
-    label: 'Canceled',
+    value: 'cancelled',
+    label: 'Cancelled',
     icon: CrossCircledIcon,
   },
 ];
 
-export const priorities = [
+export const paymentStatuses = [
   {
-    label: 'Low',
-    value: 'low',
-    icon: ArrowDownIcon,
+    label: 'Paid',
+    value: 'paid',
+    icon: CircleCheckBig,
   },
   {
-    label: 'Medium',
-    value: 'medium',
-    icon: ArrowRightIcon,
+    label: 'Unpaid',
+    value: 'unpaid',
+    icon: CircleX,
+  },
+];
+
+export const paymentTypes = [
+  {
+    label: 'Online',
+    value: 'online',
+    icon: Wifi,
   },
   {
-    label: 'High',
-    value: 'high',
-    icon: ArrowUpIcon,
+    label: 'Cash',
+    value: 'cash',
+    icon: PersonIcon,
   },
 ];
