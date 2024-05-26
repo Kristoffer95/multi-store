@@ -17,7 +17,7 @@ interface DataTableViewOptionsProps<TData> {
   table: Table<TData>;
 }
 
-export function DataTableViewOptions<TData>({
+export default function OrdersTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
   return (

@@ -1,4 +1,4 @@
-import { StoreDataTable } from '@/components/stores/store/store-data-table';
+import { StoreDataTable } from '@/components/dashboard/stores/param/store-data-table';
 import {
   Card,
   CardContent,

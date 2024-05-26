@@ -22,7 +22,7 @@ interface DataTableColumnHeaderProps<TData, TValue>
   title: string;
 }
 
-export function DataTableColumnHeader<TData, TValue>({
+export default function OrdersTableColumnHeader<TData, TValue>({
   column,
   title,
   className,

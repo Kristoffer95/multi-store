@@ -5,17 +5,17 @@ import { SortingState, Table } from '@tanstack/react-table';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { DataTableViewOptions } from './data-table-view-options';
+import OrdersTableViewOptions from './orders-table-view-options';
 
 import { priorities, statuses } from './data/data';
-import { DataTableFacetedFilter } from './data-table-faceted-filter';
+import OrdersTableFacetedFilter from './orders-table-faceted-filter';
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
   sorting: SortingState;
 }
 
-export function DataTableToolbar<TData>({
+export default function OrdersTableToolbar<TData>({
   table,
   sorting,
 }: DataTableToolbarProps<TData>) {
@@ -34,14 +34,14 @@ export function DataTableToolbar<TData>({
           className='h-8 w-[150px] lg:w-[250px]'
         />
         {table.getColumn('status') && (
-          <DataTableFacetedFilter
+          <OrdersTableFacetedFilter
             column={table.getColumn('status')}
             title='Status'
             options={statuses}
           />
         )}
         {table.getColumn('priority') && (
-          <DataTableFacetedFilter
+          <OrdersTableFacetedFilter
             column={table.getColumn('priority')}
             title='Priority'
             options={priorities}
@@ -66,7 +66,7 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
-      <DataTableViewOptions table={table} />
+      <OrdersTableViewOptions table={table} />
     </div>
   );
 }

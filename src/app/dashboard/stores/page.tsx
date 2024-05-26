@@ -1,4 +1,4 @@
-import StoresTable from '@/components/stores/stores-table';
+import StoresTable from '@/components/dashboard/stores/stores-table';
 import { Button } from '@/components/ui/button';
 import { ListFilter, Plus, PlusCircle } from 'lucide-react';
 import Link from 'next/link';

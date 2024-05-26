@@ -25,15 +25,15 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-import { DataTablePagination } from './data-table-pagination';
-import { DataTableToolbar } from './data-table-toolbar';
+import OrdersTablePagination from './orders-table-pagination';
+import OrdersTableToolbar from './orders-table-toolbar';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export default function OrdersTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -69,7 +69,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className='space-y-4'>
-      <DataTableToolbar table={table} sorting={sorting} />
+      <OrdersTableToolbar table={table} sorting={sorting} />
       <div className='rounded-md border'>
         <div className='w-full border'>
           {/* <pre>{JSON.stringify(table.getRowModel().rows, null, 2)}</pre> */}
@@ -121,7 +121,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
+      <OrdersTablePagination table={table} />
     </div>
   );
 }

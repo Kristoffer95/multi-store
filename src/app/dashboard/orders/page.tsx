@@ -4,7 +4,7 @@ import { Metadata } from 'next';
 import { z } from 'zod';
 
 import { columns } from '@/components/dashboard/orders/columns';
-import { DataTable } from '@/components/dashboard/orders/data-table';
+import OrdersTable from '@/components/dashboard/orders/orders-table';
 import { taskSchema } from '@/components/dashboard/orders/data/schema';
 import {
   Card,
@@ -42,7 +42,7 @@ export default async function DashboardOrdersPage() {
               Here&apos;s a list of active orders!
             </CardDescription>
           </CardHeader>
-          <DataTable data={tasks} columns={columns} />
+          <OrdersTable data={tasks} columns={columns} />
         </Card>
       </div>
     </>

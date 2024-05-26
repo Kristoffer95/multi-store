@@ -7,8 +7,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 
 import { labels, priorities, statuses } from './data/data';
 import { Task } from './data/schema';
-import { DataTableColumnHeader } from './data-table-column-header';
-import { DataTableRowActions } from './data-table-row-actions';
+import OrdersTableColumnHeader from './orders-table-column-header';
+import OrdersTableRowActions from './orders-table-row-actions';
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -38,7 +38,7 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: 'id',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Product SKU' />
+      <OrdersTableColumnHeader column={column} title='Product SKU' />
     ),
     cell: ({ row }) => <div className='w-[80px]'>{row.getValue('id')}</div>,
     // enableSorting: false,
@@ -47,7 +47,7 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: 'title',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Title' />
+      <OrdersTableColumnHeader column={column} title='Title' />
     ),
     cell: ({ row }) => {
       const label = labels.find((label) => label.value === row.original.label);
@@ -65,7 +65,7 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: 'status',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Status' />
+      <OrdersTableColumnHeader column={column} title='Status' />
     ),
     cell: ({ row }) => {
       const status = statuses.find(
@@ -92,7 +92,7 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: 'priority',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Priority' />
+      <OrdersTableColumnHeader column={column} title='Priority' />
     ),
     cell: ({ row }) => {
       const priority = priorities.find(
@@ -118,6 +118,6 @@ export const columns: ColumnDef<Task>[] = [
   },
   {
     id: 'actions',
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row }) => <OrdersTableRowActions row={row} />,
   },
 ];

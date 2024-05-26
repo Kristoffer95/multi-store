@@ -25,7 +25,7 @@ interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
 }
 
-export function DataTableRowActions<TData>({
+export default function OrdersTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const task = taskSchema.parse(row.original);
