@@ -36,108 +36,39 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-const data: Payment[] = [
+export type Products = {
+  id: string;
+  name: string;
+  available_qty: number;
+  sold_qty: number;
+  price: number;
+};
+
+const data: Products[] = [
   {
     id: 'm5gr84i9',
-    amount: 316,
-    status: 'success',
-    email: 'ken99@yahoo.com',
+    name: 'Product 1',
+    available_qty: 3,
+    sold_qty: 2,
+    price: 316,
   },
   {
     id: '3u1reuv4',
-    amount: 242,
-    status: 'success',
-    email: 'Abe45@gmail.com',
+    name: 'Product 2',
+    available_qty: 4,
+    sold_qty: 2,
+    price: 242,
   },
   {
     id: 'derv1ws0',
-    amount: 837,
-    status: 'processing',
-    email: 'Monserrat44@gmail.com',
-  },
-  {
-    id: '5kma53ae',
-    amount: 874,
-    status: 'success',
-    email: 'Silas22@gmail.com',
-  },
-  {
-    id: 'bhqecj4p',
-    amount: 721,
-    status: 'failed',
-    email: 'carmella@hotmail.com',
-  },
-  //
-  {
-    id: 'm5gr84i9',
-    amount: 316,
-    status: 'success',
-    email: 'ken99@yahoo.com',
-  },
-  {
-    id: '3u1reuv4',
-    amount: 242,
-    status: 'success',
-    email: 'Abe45@gmail.com',
-  },
-  {
-    id: 'derv1ws0',
-    amount: 837,
-    status: 'processing',
-    email: 'Monserrat44@gmail.com',
-  },
-  {
-    id: '5kma53ae',
-    amount: 874,
-    status: 'success',
-    email: 'Silas22@gmail.com',
-  },
-  {
-    id: 'bhqecj4p',
-    amount: 721,
-    status: 'failed',
-    email: 'carmella@hotmail.com',
-  },
-  {
-    id: 'm5gr84i9',
-    amount: 316,
-    status: 'success',
-    email: 'ken99@yahoo.com',
-  },
-  {
-    id: '3u1reuv4',
-    amount: 242,
-    status: 'success',
-    email: 'Abe45@gmail.com',
-  },
-  {
-    id: 'derv1ws0',
-    amount: 837,
-    status: 'processing',
-    email: 'Monserrat44@gmail.com',
-  },
-  {
-    id: '5kma53ae',
-    amount: 874,
-    status: 'success',
-    email: 'Silas22@gmail.com',
-  },
-  {
-    id: 'bhqecj4p',
-    amount: 721,
-    status: 'failed',
-    email: 'carmella@hotmail.com',
+    name: 'Product 3',
+    available_qty: 5,
+    sold_qty: 2,
+    price: 837,
   },
 ];
 
-export type Payment = {
-  id: string;
-  amount: number;
-  status: 'pending' | 'processing' | 'success' | 'failed';
-  email: string;
-};
-
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Products>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -161,36 +92,50 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => (
-      <div className='capitalize'>{row.getValue('status')}</div>
-    ),
+    accessorKey: 'name',
+    header: 'Name',
+    cell: ({ row }) => <div className='capitalize'>{row.getValue('name')}</div>,
   },
   {
-    accessorKey: 'email',
+    accessorKey: 'available_qty',
     header: ({ column }) => {
       return (
         <Button
+          className='px-0'
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-          Email
+          Available
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
     },
-    cell: ({ row }) => <div className='lowercase'>{row.getValue('email')}</div>,
+    cell: ({ row }) => <div>{row.getValue('available_qty')}</div>,
   },
   {
-    accessorKey: 'amount',
-    header: () => <div className='text-right'>Amount</div>,
+    accessorKey: 'sold_qty',
+    header: ({ column }) => {
+      return (
+        <Button
+          className='px-0'
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+          Sold
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div>{row.getValue('sold_qty')}</div>,
+  },
+  {
+    accessorKey: 'price',
+    header: () => <div className='text-right'>Price</div>,
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue('amount'));
+      const amount = parseFloat(row.getValue('price'));
 
       // Format the amount as a dollar amount
       const formatted = new Intl.NumberFormat('en-US', {
         style: 'currency',
-        currency: 'USD',
+        currency: 'PHP',
       }).format(amount);
 
       return <div className='text-right font-medium'>{formatted}</div>;
@@ -258,10 +203,10 @@ export function StoreDataTable() {
     <div className='w-full'>
       <div className='flex items-center py-4'>
         <Input
-          placeholder='Filter emails...'
-          value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
+          placeholder='Filter product name'
+          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
-            table.getColumn('email')?.setFilterValue(event.target.value)
+            table.getColumn('name')?.setFilterValue(event.target.value)
           }
           className='max-w-sm'
         />
