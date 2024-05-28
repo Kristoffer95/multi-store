@@ -27,3 +27,8 @@ sb-generate-types:
 
 shadcn-add:
 	npx shadcn-ui@latest add
+
+
+# Supabase
+generate-supatypes:
+	npm run supabase:generate-types

@@ -18,7 +18,7 @@ function StorePage({
     <div className=' rounded-2xl'>
       <Card>
         <CardHeader>
-          <CardTitle>Store Products</CardTitle>
+          <CardTitle>Store Name</CardTitle>
           <CardDescription>
             Manage your products and view their sales performance.
           </CardDescription>

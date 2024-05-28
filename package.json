@@ -7,7 +7,8 @@
     "dev:https": "next dev --experimental-https",
     "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "supabase:generate-types": "rm -rf src/types/supabase.types.ts && supabase gen types typescript --local >> src/types/supabase.types.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.1.0",
