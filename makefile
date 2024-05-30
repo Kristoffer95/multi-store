@@ -32,3 +32,13 @@ shadcn-add:
 # Supabase
 generate-supatypes:
 	npm run supabase:generate-types
+
+.PHONY: supabase-migrate
+
+# Define the supabase-migrate target with a parameter check
+supabase-migrate:
+ifndef name
+	$(error name is not defined. Usage: make supabase-migrate name=migration_name_here)
+endif
+	@echo "Running migration with name: $(name)"
+	supabase db diff --use-migra -f $(name)
