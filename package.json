@@ -8,7 +8,8 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "supabase:generate-types": "rm -rf src/types/supabase.types.ts && supabase gen types typescript --local >> src/types/supabase.types.ts"
+    "supabase:generate-types": "rm -rf src/types/supabase.types.ts && supabase gen types typescript --local >> src/types/supabase.types.ts",
+    "supabase:backup-seed": "supabase db dump --data-only --local -f supabase/seed.sql"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.1.0",
