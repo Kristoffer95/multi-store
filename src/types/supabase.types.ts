@@ -133,24 +133,24 @@ export type Database = {
       }
       product_prices: {
         Row: {
-          amount: number | null
           created_at: string
           id: string
           instance_id: number
+          price: number | null
           product_id: string
         }
         Insert: {
-          amount?: number | null
           created_at?: string
           id?: string
           instance_id?: number
+          price?: number | null
           product_id?: string
         }
         Update: {
-          amount?: number | null
           created_at?: string
           id?: string
           instance_id?: number
+          price?: number | null
           product_id?: string
         }
         Relationships: [
@@ -163,36 +163,119 @@ export type Database = {
           },
         ]
       }
-      products: {
+      product_sizes: {
+        Row: {
+          created_at: string
+          id: string
+          instance_id: number
+          price: number
+          product_size_id: string | null
+          product_variant_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          instance_id?: number
+          price?: number
+          product_size_id?: string | null
+          product_variant_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          instance_id?: number
+          price?: number
+          product_size_id?: string | null
+          product_variant_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_sizes_product_size_id_fkey"
+            columns: ["product_size_id"]
+            isOneToOne: false
+            referencedRelation: "product_sizes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_sizes_product_variant_id_fkey"
+            columns: ["product_variant_id"]
+            isOneToOne: false
+            referencedRelation: "product_variants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      product_variants: {
         Row: {
           created_at: string
           id: string
           instance_id: number
           name: string
+          product_id: string
           quantity: number
-          size: string
-          store_id: string | null
-          variant: string
         }
         Insert: {
           created_at?: string
           id?: string
           instance_id?: number
           name: string
+          product_id: string
           quantity?: number
-          size: string
-          store_id?: string | null
-          variant: string
         }
         Update: {
           created_at?: string
           id?: string
           instance_id?: number
           name?: string
+          product_id?: string
           quantity?: number
-          size?: string
-          store_id?: string | null
-          variant?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_variants_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          created_at: string
+          default_price: number
+          description: string | null
+          id: string
+          instance_id: number
+          name: string
+          quantity: number
+          store_id: string
+          store_product_category_id: string | null
+          type: Database["public"]["Enums"]["product_types"]
+        }
+        Insert: {
+          created_at?: string
+          default_price?: number
+          description?: string | null
+          id?: string
+          instance_id?: number
+          name: string
+          quantity: number
+          store_id?: string
+          store_product_category_id?: string | null
+          type?: Database["public"]["Enums"]["product_types"]
+        }
+        Update: {
+          created_at?: string
+          default_price?: number
+          description?: string | null
+          id?: string
+          instance_id?: number
+          name?: string
+          quantity?: number
+          store_id?: string
+          store_product_category_id?: string | null
+          type?: Database["public"]["Enums"]["product_types"]
         }
         Relationships: [
           {
@@ -200,6 +283,13 @@ export type Database = {
             columns: ["store_id"]
             isOneToOne: false
             referencedRelation: "stores"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "products_store_product_category_id_fkey"
+            columns: ["store_product_category_id"]
+            isOneToOne: false
+            referencedRelation: "store_product_categories"
             referencedColumns: ["id"]
           },
         ]
@@ -247,21 +337,53 @@ export type Database = {
           created_at: string
           id: string
           instance_id: number
-          role: Database["public"]["Enums"]["role_types"] | null
+          role: Database["public"]["Enums"]["role_types"]
         }
         Insert: {
           created_at?: string
           id?: string
           instance_id?: number
-          role?: Database["public"]["Enums"]["role_types"] | null
+          role?: Database["public"]["Enums"]["role_types"]
         }
         Update: {
           created_at?: string
           id?: string
           instance_id?: number
-          role?: Database["public"]["Enums"]["role_types"] | null
+          role?: Database["public"]["Enums"]["role_types"]
         }
         Relationships: []
+      }
+      store_product_categories: {
+        Row: {
+          created_at: string
+          id: string
+          instance_id: number
+          name: string
+          store_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          instance_id?: number
+          name: string
+          store_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          instance_id?: number
+          name?: string
+          store_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "store_product_categories_store_id_fkey"
+            columns: ["store_id"]
+            isOneToOne: false
+            referencedRelation: "stores"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       store_profiles: {
         Row: {
@@ -269,24 +391,24 @@ export type Database = {
           id: string
           instance_id: number
           profile_id: string
-          role_id: string | null
-          store_id: string | null
+          role_id: string
+          store_id: string
         }
         Insert: {
           created_at?: string
           id?: string
           instance_id?: number
           profile_id: string
-          role_id?: string | null
-          store_id?: string | null
+          role_id: string
+          store_id: string
         }
         Update: {
           created_at?: string
           id?: string
           instance_id?: number
           profile_id?: string
-          role_id?: string | null
-          store_id?: string | null
+          role_id?: string
+          store_id?: string
         }
         Relationships: [
           {
@@ -312,6 +434,27 @@ export type Database = {
           },
         ]
       }
+      store_types: {
+        Row: {
+          created_at: string
+          id: string
+          instance_id: number
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          instance_id?: number
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          instance_id?: number
+          name?: string
+        }
+        Relationships: []
+      }
       stores: {
         Row: {
           address: string | null
@@ -319,6 +462,7 @@ export type Database = {
           id: string
           instance_id: number
           name: string
+          store_types_id: string | null
         }
         Insert: {
           address?: string | null
@@ -326,6 +470,7 @@ export type Database = {
           id?: string
           instance_id?: number
           name: string
+          store_types_id?: string | null
         }
         Update: {
           address?: string | null
@@ -333,8 +478,17 @@ export type Database = {
           id?: string
           instance_id?: number
           name?: string
+          store_types_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "stores_store_types_id_fkey"
+            columns: ["store_types_id"]
+            isOneToOne: false
+            referencedRelation: "store_types"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
@@ -344,6 +498,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      product_types: "no_variant" | "with_variant"
       role_types: "store_owner" | "store_admin" | "store_cashier" | "customer"
     }
     CompositeTypes: {
