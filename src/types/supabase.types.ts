@@ -251,6 +251,7 @@ export type Database = {
           quantity: number
           store_id: string
           store_product_category_id: string | null
+          total_sold: number
           type: Database["public"]["Enums"]["product_types"]
         }
         Insert: {
@@ -263,6 +264,7 @@ export type Database = {
           quantity: number
           store_id?: string
           store_product_category_id?: string | null
+          total_sold?: number
           type?: Database["public"]["Enums"]["product_types"]
         }
         Update: {
@@ -275,6 +277,7 @@ export type Database = {
           quantity?: number
           store_id?: string
           store_product_category_id?: string | null
+          total_sold?: number
           type?: Database["public"]["Enums"]["product_types"]
         }
         Relationships: [

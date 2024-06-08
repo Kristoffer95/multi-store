@@ -15,53 +15,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { getStores } from '@/actions/store';
 
-const invoices = [
-  {
-    invoice: 'INV001',
-    paymentStatus: 'Paid',
-    totalAmount: '$250.00',
-    paymentMethod: 'Credit Card',
-  },
-  {
-    invoice: 'INV002',
-    paymentStatus: 'Pending',
-    totalAmount: '$150.00',
-    paymentMethod: 'PayPal',
-  },
-  {
-    invoice: 'INV003',
-    paymentStatus: 'Unpaid',
-    totalAmount: '$350.00',
-    paymentMethod: 'Bank Transfer',
-  },
-  {
-    invoice: 'INV004',
-    paymentStatus: 'Paid',
-    totalAmount: '$450.00',
-    paymentMethod: 'Credit Card',
-  },
-  {
-    invoice: 'INV005',
-    paymentStatus: 'Paid',
-    totalAmount: '$550.00',
-    paymentMethod: 'PayPal',
-  },
-  {
-    invoice: 'INV006',
-    paymentStatus: 'Pending',
-    totalAmount: '$200.00',
-    paymentMethod: 'Bank Transfer',
-  },
-  {
-    invoice: 'INV007',
-    paymentStatus: 'Unpaid',
-    totalAmount: '$300.00',
-    paymentMethod: 'Credit Card',
-  },
-];
+async function StoresTable() {
+  const stores = await getStores();
 
-export default function StoresTable() {
   return (
     <Card className='p-4 pt-0'>
       <CardHeader>
@@ -83,23 +41,29 @@ export default function StoresTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {invoices.map((invoice, index) => (
-            <TableRow key={index}>
-              <TableCell className='font-medium'>{index + 1}</TableCell>
-              <TableCell className='flex items-center justify-between'>
-                <Link
-                  href={`/dashboard/stores/${index + 1}`}
-                  className='hover:underline underline-offset-2'>
-                  Store Name
-                </Link>
-              </TableCell>
-              <TableCell className='text-center'>2</TableCell>
-              <TableCell className='text-center'>5</TableCell>
-              <TableCell className='text-right'>
-                {invoice.totalAmount}
+          {stores && stores.length > 0 ? (
+            stores.map((store, index) => (
+              <TableRow key={index}>
+                <TableCell className='font-medium'>{index + 1}</TableCell>
+                <TableCell className='flex items-center justify-between'>
+                  <Link
+                    href={`/dashboard/stores/${store.id}`}
+                    className='hover:underline underline-offset-2 capitalize'>
+                    {store.name}
+                  </Link>
+                </TableCell>
+                <TableCell className='text-center'>2</TableCell>
+                <TableCell className='text-center'>5</TableCell>
+                <TableCell className='text-right'>0</TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={5} className='text-center py-6'>
+                No stores availalbe
               </TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
         <TableFooter>
           <TableRow>
@@ -111,3 +75,4 @@ export default function StoresTable() {
     </Card>
   );
 }
+export default StoresTable;

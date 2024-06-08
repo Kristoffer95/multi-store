@@ -35,40 +35,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { Tables } from '@/types/supabase.types';
 
-export type Products = {
-  id: string;
-  name: string;
-  available_qty: number;
-  sold_qty: number;
-  price: number;
-};
-
-const data: Products[] = [
-  {
-    id: 'm5gr84i9',
-    name: 'Product 1',
-    available_qty: 3,
-    sold_qty: 2,
-    price: 316,
-  },
-  {
-    id: '3u1reuv4',
-    name: 'Product 2',
-    available_qty: 4,
-    sold_qty: 2,
-    price: 242,
-  },
-  {
-    id: 'derv1ws0',
-    name: 'Product 3',
-    available_qty: 5,
-    sold_qty: 2,
-    price: 837,
-  },
-];
-
-export const columns: ColumnDef<Products>[] = [
+export const columns: ColumnDef<Tables<'products'>>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -97,7 +66,7 @@ export const columns: ColumnDef<Products>[] = [
     cell: ({ row }) => <div className='capitalize'>{row.getValue('name')}</div>,
   },
   {
-    accessorKey: 'available_qty',
+    accessorKey: 'quantity',
     header: ({ column }) => {
       return (
         <Button
@@ -109,10 +78,10 @@ export const columns: ColumnDef<Products>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue('available_qty')}</div>,
+    cell: ({ row }) => <div>{row.getValue('quantity')}</div>,
   },
   {
-    accessorKey: 'sold_qty',
+    accessorKey: 'total_sold',
     header: ({ column }) => {
       return (
         <Button
@@ -124,13 +93,13 @@ export const columns: ColumnDef<Products>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue('sold_qty')}</div>,
+    cell: ({ row }) => <div>{row.getValue('total_sold')}</div>,
   },
   {
-    accessorKey: 'price',
+    accessorKey: 'default_price',
     header: () => <div className='text-right'>Price</div>,
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue('price'));
+      const amount = parseFloat(row.getValue('default_price'));
 
       // Format the amount as a dollar amount
       const formatted = new Intl.NumberFormat('en-US', {
@@ -145,7 +114,7 @@ export const columns: ColumnDef<Products>[] = [
     id: 'actions',
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original;
+      const product = row.original;
 
       return (
         <DropdownMenu>
@@ -158,12 +127,12 @@ export const columns: ColumnDef<Products>[] = [
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}>
-              Copy payment ID
+              onClick={() => navigator.clipboard.writeText(product.id)}>
+              Copy product ID
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
+            {/* <DropdownMenuSeparator />
             <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem>View payment details</DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -171,7 +140,11 @@ export const columns: ColumnDef<Products>[] = [
   },
 ];
 
-export function StoreDataTable() {
+export function StoreDataTable({
+  products,
+}: {
+  products: Tables<'products'>[] | null;
+}) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -181,7 +154,7 @@ export function StoreDataTable() {
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
-    data,
+    data: products && products.length > 0 ? products : [],
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -277,7 +250,7 @@ export function StoreDataTable() {
                 <TableCell
                   colSpan={columns.length}
                   className='h-24 text-center'>
-                  No results.
+                  No products yet.
                 </TableCell>
               </TableRow>
             )}

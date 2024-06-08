@@ -1,6 +1,5 @@
 'use server';
 import { createClient } from '@/utils/supabase/server';
-import { supabaseWrapper } from '@/utils/supabase/supabase-wrapper';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
@@ -11,7 +10,7 @@ export async function signOutAction() {
 }
 
 export async function loginAction(formData: FormData) {
-  const supabase = supabaseWrapper('server');
+  const supabase = createClient();
 
   // type-casting here for convenience
   // in practice, you should validate your inputs
@@ -31,7 +30,7 @@ export async function loginAction(formData: FormData) {
 }
 
 export async function signupAction(formData: FormData) {
-  const supabase = supabaseWrapper('server');
+  const supabase = createClient();
 
   // type-casting here for convenience
   // in practice, you should validate your inputs

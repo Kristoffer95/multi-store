@@ -1,6 +1,7 @@
+import { getStores } from '@/actions/store';
 import StoresTable from '@/components/dashboard/stores/stores-table';
 import { Button } from '@/components/ui/button';
-import { ListFilter, Plus, PlusCircle } from 'lucide-react';
+import { PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 
 async function ProfilePage() {

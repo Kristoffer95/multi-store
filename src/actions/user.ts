@@ -1,9 +1,9 @@
 'use server';
 
-import { supabaseWrapper } from '@/utils/supabase/supabase-wrapper';
+import { createClient } from '@/utils/supabase/server';
 
 export async function getUserAction() {
-  const supabase = supabaseWrapper('server');
+  const supabase = createClient();
 
   const { data, error } = await supabase.auth.getUser();
 
