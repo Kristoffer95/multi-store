@@ -1,5 +1,6 @@
 import { getStoreByIdAction } from '@/actions/store';
-import { StoreDataTable } from '@/components/dashboard/stores/param/store-data-table';
+import { columns } from '@/components/dashboard/stores/param/columns';
+import { StoreTable } from '@/components/dashboard/stores/param/store-table';
 import {
   Card,
   CardContent,
@@ -28,7 +29,7 @@ async function StorePage({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <StoreDataTable products={store?.products || null} />
+          <StoreTable columns={columns} products={store?.products || null} />
         </CardContent>
       </Card>
     </div>
