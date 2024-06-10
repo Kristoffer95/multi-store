@@ -13,17 +13,13 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
@@ -35,14 +31,15 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Tables } from '@/types/supabase.types';
+import { type Product } from '@prisma/client';
 
-interface StoreTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  products: TData[];
-}
-
-export function StoreTable({ columns, products }: StoreTableProps) {
+export function StoreTable({
+  columns,
+  products,
+}: {
+  columns: ColumnDef<Product>[];
+  products: Product[] | null;
+}) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []

@@ -15,11 +15,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { getStores } from '@/actions/store';
+import { getStoresAction } from '@/actions/store';
 
 async function StoresTable() {
-  // const stores = await getStores();
-  const stores = [];
+  const stores = await getStoresAction();
+  // const stores = [];
 
   return (
     <Card className='p-4 pt-0'>

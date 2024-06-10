@@ -1,4 +1,3 @@
-import { getStores } from '@/actions/store';
 import StoresTable from '@/components/dashboard/stores/stores-table';
 import { Button } from '@/components/ui/button';
 import { PlusCircle } from 'lucide-react';
@@ -15,10 +14,6 @@ async function ProfilePage() {
               Add Store
             </span>
           </Button>
-          {/* <Button className='flex gap-2 h-8' size='sm'>
-            <Plus className='mr-2 h-4 w-4' />
-            New Store
-          </Button> */}
         </Link>
       </div>
       <StoresTable />

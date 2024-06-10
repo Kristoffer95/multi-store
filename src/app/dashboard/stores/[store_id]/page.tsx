@@ -13,18 +13,18 @@ async function StorePage({
   params,
 }: {
   params: {
-    store_id: string; // storeID
+    store_id: string;
   };
 }) {
-  // const store = await getStoreByIdAction(params.store_id);
-  const store = [];
+  const store = await getStoreByIdAction(params.store_id);
+
+  console.log(store);
 
   return (
     <div className=' rounded-2xl'>
       <Card>
         <CardHeader>
           <CardTitle>{store?.name}</CardTitle>
-          {/* <pre>{JSON.stringify(store?.products, null, 2)}</pre> */}
           <CardDescription>
             Manage your products and view their sales performance.
           </CardDescription>

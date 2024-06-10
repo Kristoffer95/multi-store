@@ -21,10 +21,10 @@ model Store {
   created_at     DateTime @default(now())
   store_types_id String
 
-  Products          Product[]
-  StoreUsers        StoreUsers[]
-  ProductCategories ProductCategories[]
-  StoreType         StoreTypes          @relation(fields: [store_types_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  products           Product[]
+  store_users        StoreUsers[]
+  product_categories ProductCategories[]
+  store_types        StoreTypes          @relation(fields: [store_types_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 }
 
 model Cart {
@@ -33,9 +33,9 @@ model Cart {
   instance_id Int      @default(autoincrement())
   user_id     String
 
-  Orders       Order[]
-  CartProducts CartProducts[]
-  User         User           @relation(fields: [user_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  orders        Order[]
+  cart_products CartProducts[]
+  user          User           @relation(fields: [user_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 }
 
 model Order {
@@ -44,7 +44,7 @@ model Order {
   instance_id Int      @default(autoincrement())
   cart_id     String
 
-  Cart Cart @relation(fields: [cart_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  cart Cart @relation(fields: [cart_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 }
 
 model Product {
@@ -56,16 +56,24 @@ model Product {
   created_at          DateTime @default(now())
   description         String?
   default_price       Float
-  type                String?
+  product_type_id     String
   product_category_id String?
   total_sold          Int
 
-  ProductVariants ProductVariants[]
-  ProductPrices   ProductPrices[]
-  CartProducts    CartProducts[]
+  product_variants ProductVariants[]
+  product_prices   ProductPrices[]
+  cart_products    CartProducts[]
 
-  Store             Store              @relation(fields: [store_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  ProductCategories ProductCategories? @relation(fields: [product_category_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  product_type       ProductType        @relation(fields: [product_type_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  store              Store              @relation(fields: [store_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  product_categories ProductCategories? @relation(fields: [product_category_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+}
+
+model ProductType {
+  id          String    @id @default(uuid())
+  instance_id Int       @default(autoincrement())
+  name        String // with variant, no_variant
+  Product     Product[]
 }
 
 model ProductPrices {
@@ -76,8 +84,8 @@ model ProductPrices {
   product_id      String
   product_size_id String
 
-  Product     Product      @relation(fields: [product_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  ProductSize ProductSizes @relation(fields: [product_size_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  product      Product      @relation(fields: [product_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  product_size ProductSizes @relation(fields: [product_size_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 }
 
 model ProductSizes {
@@ -87,8 +95,8 @@ model ProductSizes {
   price              Float
   product_variant_id String
 
-  ProductPrices  ProductPrices[]
-  ProductVariant ProductVariants @relation(fields: [product_variant_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  product_prices  ProductPrices[]
+  product_variant ProductVariants @relation(fields: [product_variant_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 }
 
 model ProductVariants {
@@ -99,8 +107,8 @@ model ProductVariants {
   name        String
   quantity    Int
 
-  ProductSizes ProductSizes[]
-  Product      Product        @relation(fields: [product_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  product_sizes ProductSizes[]
+  product       Product        @relation(fields: [product_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 }
 
 model CartProducts {
@@ -110,8 +118,8 @@ model CartProducts {
   product_id  String
   created_at  DateTime @default(now())
 
-  Cart    Cart    @relation(fields: [cart_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  Product Product @relation(fields: [product_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  cart    Cart    @relation(fields: [cart_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  product Product @relation(fields: [product_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 }
 
 model Roles {
@@ -120,7 +128,7 @@ model Roles {
   created_at  DateTime @default(now())
   role        String
 
-  StoreUsers StoreUsers[]
+  store_users StoreUsers[]
 }
 
 model ProductCategories {
@@ -130,8 +138,8 @@ model ProductCategories {
   name        String
   store_id    String
 
-  Products Product[]
-  Store    Store     @relation(fields: [store_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  products Product[]
+  store    Store     @relation(fields: [store_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 }
 
 model StoreUsers {
@@ -142,9 +150,9 @@ model StoreUsers {
   created_at  DateTime @default(now())
   role_id     String
 
-  User  User  @relation(fields: [user_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  Store Store @relation(fields: [store_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  Role  Roles @relation(fields: [role_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  user  User  @relation(fields: [user_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  store Store @relation(fields: [store_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  role  Roles @relation(fields: [role_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 }
 
 model StoreTypes {
@@ -153,7 +161,7 @@ model StoreTypes {
   instance_id Int      @default(autoincrement())
   name        String
 
-  Stores Store[]
+  stores Store[]
 }
 
 // ------------------------ AuthJs schema ------------------------
@@ -172,11 +180,11 @@ model User {
   accounts      Account[]
   sessions      Session[]
   // Optional for WebAuthn support
-  Authenticator Authenticator[]
+  authenticator Authenticator[]
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
-  Cart          Cart[]
-  StoreUsers    StoreUsers[]
+  cart          Cart[]
+  store_users   StoreUsers[]
 }
 
 model Account {
