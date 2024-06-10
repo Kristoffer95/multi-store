@@ -16,7 +16,8 @@ async function StorePage({
     store_id: string; // storeID
   };
 }) {
-  const store = await getStoreByIdAction(params.store_id);
+  // const store = await getStoreByIdAction(params.store_id);
+  const store = [];
 
   return (
     <div className=' rounded-2xl'>

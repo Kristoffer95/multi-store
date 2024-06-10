@@ -18,7 +18,8 @@ import {
 import { getStores } from '@/actions/store';
 
 async function StoresTable() {
-  const stores = await getStores();
+  // const stores = await getStores();
+  const stores = [];
 
   return (
     <Card className='p-4 pt-0'>

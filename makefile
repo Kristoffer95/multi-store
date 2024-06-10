@@ -21,24 +21,33 @@ down:
 # docker-compose --env-file .env.local down
 	docker-compose --env-file .env down
 
-# storyblok
-sb-generate-types:
-	npm run storyblok:generate-types
-
 shadcn-add:
 	npx shadcn-ui@latest add
 
+prisma-generate:
+	npm run prisma:generate
 
-# Supabase
-generate-supatypes:
-	npm run supabase:generate-types
+prisma-migrate:
+	npm run prisma:migrate
+	npm run prisma:generate
 
-.PHONY: supabase-migrate
+prisma-studio:
+	npm run prisma:studio
 
-# Define the supabase-migrate target with a parameter check
-supabase-migrate:
-ifndef name
-	$(error name is not defined. Usage: make supabase-migrate name=migration_name_here)
-endif
-	@echo "Running migration with name: $(name)"
-	supabase db diff --use-migra -f $(name)
+# storyblok
+# sb-generate-types:
+# 	npm run storyblok:generate-types
+
+# # Supabase
+# generate-supatypes:
+# 	npm run supabase:generate-types
+
+# .PHONY: supabase-migrate
+
+# # Define the supabase-migrate target with a parameter check
+# supabase-migrate:
+# ifndef name
+# 	$(error name is not defined. Usage: make supabase-migrate name=migration_name_here)
+# endif
+# 	@echo "Running migration with name: $(name)"
+# 	supabase db diff --use-migra -f $(name)

@@ -1,0 +1,181 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(uuid())
+  email      String   @unique
+  password   String
+  created_at DateTime @default(now())
+
+  profile Profile?
+}
+
+model Profile {
+  id           String   @id @default(uuid())
+  instance_id  Int      @default(autoincrement())
+  created_at   DateTime @default(now())
+  first_name   String
+  last_name    String
+  phone_number String?
+  username     String   @unique
+
+  userId String? @unique
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  Carts         Cart[]
+  StoreProfiles StoreProfiles[]
+}
+
+model Store {
+  id             String   @id @default(uuid())
+  instance_id    Int      @default(autoincrement())
+  name           String
+  address        String
+  created_at     DateTime @default(now())
+  store_types_id String
+
+  StoreType              StoreTypes               @relation(fields: [store_types_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  Products               Product[]
+  StoreProfiles          StoreProfiles[]
+  StoreProductCategories StoreProductCategories[]
+}
+
+model Cart {
+  id          String   @id @default(uuid())
+  created_at  DateTime @default(now())
+  instance_id Int      @default(autoincrement())
+  profile_id  String
+
+  Profile      Profile        @relation(fields: [profile_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  Orders       Order[]
+  CartProducts CartProducts[]
+}
+
+model Order {
+  id          String   @id @default(uuid())
+  created_at  DateTime @default(now())
+  instance_id Int      @default(autoincrement())
+  cart_id     String
+
+  Cart Cart @relation(fields: [cart_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+}
+
+model Product {
+  id                        String   @id @default(uuid())
+  instance_id               Int      @default(autoincrement())
+  store_id                  String
+  name                      String
+  quantity                  Int
+  created_at                DateTime @default(now())
+  description               String?
+  default_price             Float
+  type                      String?
+  store_product_category_id String?
+  total_sold                Int
+
+  Store                Store                   @relation(fields: [store_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  StoreProductCategory StoreProductCategories? @relation(fields: [store_product_category_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  ProductVariants      ProductVariants[]
+  ProductPrices        ProductPrices[]
+  CartProducts         CartProducts[]
+}
+
+model ProductPrices {
+  id              String   @id @default(uuid())
+  instance_id     Int      @default(autoincrement())
+  price           Float
+  created_at      DateTime @default(now())
+  product_id      String
+  product_size_id String
+
+  Product     Product      @relation(fields: [product_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  ProductSize ProductSizes @relation(fields: [product_size_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+}
+
+model ProductSizes {
+  id                 String   @id @default(uuid())
+  created_at         DateTime @default(now())
+  instance_id        Int      @default(autoincrement())
+  price              Float
+  product_variant_id String
+
+  ProductVariant ProductVariants @relation(fields: [product_variant_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  ProductPrices  ProductPrices[]
+}
+
+model ProductVariants {
+  id          String   @id @default(uuid())
+  created_at  DateTime @default(now())
+  instance_id Int      @default(autoincrement())
+  product_id  String
+  name        String
+  quantity    Int
+
+  Product      Product        @relation(fields: [product_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  ProductSizes ProductSizes[]
+}
+
+model CartProducts {
+  id          String   @id @default(uuid())
+  instance_id Int      @default(autoincrement())
+  cart_id     String
+  product_id  String
+  created_at  DateTime @default(now())
+
+  Cart    Cart    @relation(fields: [cart_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  Product Product @relation(fields: [product_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+}
+
+model Roles {
+  id          String   @id @default(uuid())
+  instance_id Int      @default(autoincrement())
+  created_at  DateTime @default(now())
+  role        String
+
+  StoreProfiles StoreProfiles[]
+}
+
+model StoreProductCategories {
+  id          String   @id @default(uuid())
+  created_at  DateTime @default(now())
+  instance_id Int      @default(autoincrement())
+  name        String
+  store_id    String
+
+  Store    Store     @relation(fields: [store_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  Products Product[]
+}
+
+model StoreProfiles {
+  id          String   @id @default(uuid())
+  instance_id Int      @default(autoincrement())
+  profile_id  String
+  store_id    String
+  created_at  DateTime @default(now())
+  role_id     String
+
+  Profile Profile @relation(fields: [profile_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  Store   Store   @relation(fields: [store_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  Role    Roles   @relation(fields: [role_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+}
+
+model StoreTypes {
+  id          String   @id @default(uuid())
+  created_at  DateTime @default(now())
+  instance_id Int      @default(autoincrement())
+  name        String
+
+  Stores Store[]
+}
