@@ -13,32 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// model User {
-//   id         String   @id @default(uuid())
-//   email      String   @unique
-//   password   String
-//   created_at DateTime @default(now())
-
-//   profile Profile?
-// }
-
-// model Profile {
-//   id           String   @id @default(uuid())
-//   instance_id  Int      @default(autoincrement())
-//   created_at   DateTime @default(now())
-//   first_name   String
-//   last_name    String
-//   phone_number String?
-//   username     String   @unique
-
-//   userId String? @unique
-//   // user   User?   @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-
-//   Carts         Cart[]
-//   StoreUsers StoreUsers[]
-//   // User          User[]
-// }
-
 model Store {
   id             String   @id @default(uuid())
   instance_id    Int      @default(autoincrement())
@@ -47,10 +21,10 @@ model Store {
   created_at     DateTime @default(now())
   store_types_id String
 
-  StoreType              StoreTypes               @relation(fields: [store_types_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  Products               Product[]
-  StoreUsers             StoreUsers[]
-  StoreProductCategories StoreProductCategories[]
+  Products          Product[]
+  StoreUsers        StoreUsers[]
+  ProductCategories ProductCategories[]
+  StoreType         StoreTypes          @relation(fields: [store_types_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 }
 
 model Cart {
@@ -59,9 +33,9 @@ model Cart {
   instance_id Int      @default(autoincrement())
   user_id     String
 
-  User         User           @relation(fields: [user_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
   Orders       Order[]
   CartProducts CartProducts[]
+  User         User           @relation(fields: [user_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 }
 
 model Order {
@@ -74,23 +48,24 @@ model Order {
 }
 
 model Product {
-  id                        String   @id @default(uuid())
-  instance_id               Int      @default(autoincrement())
-  store_id                  String
-  name                      String
-  quantity                  Int
-  created_at                DateTime @default(now())
-  description               String?
-  default_price             Float
-  type                      String?
-  store_product_category_id String?
-  total_sold                Int
+  id                  String   @id @default(uuid())
+  instance_id         Int      @default(autoincrement())
+  store_id            String
+  name                String
+  quantity            Int
+  created_at          DateTime @default(now())
+  description         String?
+  default_price       Float
+  type                String?
+  product_category_id String?
+  total_sold          Int
 
-  Store                Store                   @relation(fields: [store_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  StoreProductCategory StoreProductCategories? @relation(fields: [store_product_category_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  ProductVariants      ProductVariants[]
-  ProductPrices        ProductPrices[]
-  CartProducts         CartProducts[]
+  ProductVariants ProductVariants[]
+  ProductPrices   ProductPrices[]
+  CartProducts    CartProducts[]
+
+  Store             Store              @relation(fields: [store_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  ProductCategories ProductCategories? @relation(fields: [product_category_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 }
 
 model ProductPrices {
@@ -112,8 +87,8 @@ model ProductSizes {
   price              Float
   product_variant_id String
 
-  ProductVariant ProductVariants @relation(fields: [product_variant_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
   ProductPrices  ProductPrices[]
+  ProductVariant ProductVariants @relation(fields: [product_variant_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 }
 
 model ProductVariants {
@@ -124,8 +99,8 @@ model ProductVariants {
   name        String
   quantity    Int
 
-  Product      Product        @relation(fields: [product_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
   ProductSizes ProductSizes[]
+  Product      Product        @relation(fields: [product_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 }
 
 model CartProducts {
@@ -148,15 +123,15 @@ model Roles {
   StoreUsers StoreUsers[]
 }
 
-model StoreProductCategories {
+model ProductCategories {
   id          String   @id @default(uuid())
   created_at  DateTime @default(now())
   instance_id Int      @default(autoincrement())
   name        String
   store_id    String
 
-  Store    Store     @relation(fields: [store_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
   Products Product[]
+  Store    Store     @relation(fields: [store_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 }
 
 model StoreUsers {
@@ -182,9 +157,14 @@ model StoreTypes {
 }
 
 // ------------------------ AuthJs schema ------------------------
+// NOTE: name and (first_name, last_name) exist togethere because
+// some providers like github only has a name field meaning
+// the first and last name are merged together in the name field.
 model User {
   id            String          @id @default(cuid())
   name          String?
+  first_name    String?
+  last_name     String?
   email         String          @unique
   emailVerified DateTime?
   password      String?
@@ -195,8 +175,6 @@ model User {
   Authenticator Authenticator[]
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
-  // Profile       Profile?        @relation(fields: [profileId], references: [id])
-  // profileId     String?
   Cart          Cart[]
   StoreUsers    StoreUsers[]
 }
@@ -215,7 +193,8 @@ model Account {
   session_state     String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([provider, providerAccountId])
 }
@@ -224,9 +203,10 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
@@ -248,5 +228,6 @@ model Authenticator {
   credentialDeviceType String
   credentialBackedUp   Boolean
   transports           String?
-  user                 User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

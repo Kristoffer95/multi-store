@@ -5,13 +5,24 @@ import { PrismaClient } from '@prisma/client';
 import type { Provider } from 'next-auth/providers';
 
 // providers
-import Github from 'next-auth/providers/github';
+import Github, { type GitHubProfile } from 'next-auth/providers/github';
 import Credentials from 'next-auth/providers/credentials';
 
 const prisma = new PrismaClient();
 
 const providers: Provider[] = [
   Github,
+  // Github({
+  //   clientId: process.env.AUTH_GITHUB_ID as string,
+  //   clientSecret: process.env.AUTH_GITHUB_SECRET as string,
+  //   profile: (profile: GitHubProfile) => {
+  //     return {
+  //       id: profile.id.toString(),
+  //       email: profile.email,
+  //       first_name: profile.name,
+  //     };
+  //   },
+  // }),
   Credentials({
     credentials: {
       email: { label: 'Email', type: 'email' },
@@ -46,8 +57,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return true;
     },
     // session data
-    async session({ session, token }) {
+    async session({ session, token, user }) {
       const userId = token.sub as string;
+
       session.user.id = userId;
       return session;
     },
