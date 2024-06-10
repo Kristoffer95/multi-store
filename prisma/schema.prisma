@@ -22,21 +22,22 @@ datasource db {
 //   profile Profile?
 // }
 
-model Profile {
-  id           String   @id @default(uuid())
-  instance_id  Int      @default(autoincrement())
-  created_at   DateTime @default(now())
-  first_name   String
-  last_name    String
-  phone_number String?
-  username     String   @unique
+// model Profile {
+//   id           String   @id @default(uuid())
+//   instance_id  Int      @default(autoincrement())
+//   created_at   DateTime @default(now())
+//   first_name   String
+//   last_name    String
+//   phone_number String?
+//   username     String   @unique
 
-  userId String? @unique
-  user   User?   @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+//   userId String? @unique
+//   // user   User?   @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Cascade)
 
-  Carts         Cart[]
-  StoreProfiles StoreProfiles[]
-}
+//   Carts         Cart[]
+//   StoreUsers StoreUsers[]
+//   // User          User[]
+// }
 
 model Store {
   id             String   @id @default(uuid())
@@ -48,7 +49,7 @@ model Store {
 
   StoreType              StoreTypes               @relation(fields: [store_types_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
   Products               Product[]
-  StoreProfiles          StoreProfiles[]
+  StoreUsers             StoreUsers[]
   StoreProductCategories StoreProductCategories[]
 }
 
@@ -56,9 +57,9 @@ model Cart {
   id          String   @id @default(uuid())
   created_at  DateTime @default(now())
   instance_id Int      @default(autoincrement())
-  profile_id  String
+  user_id     String
 
-  Profile      Profile        @relation(fields: [profile_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  User         User           @relation(fields: [user_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
   Orders       Order[]
   CartProducts CartProducts[]
 }
@@ -144,7 +145,7 @@ model Roles {
   created_at  DateTime @default(now())
   role        String
 
-  StoreProfiles StoreProfiles[]
+  StoreUsers StoreUsers[]
 }
 
 model StoreProductCategories {
@@ -158,17 +159,17 @@ model StoreProductCategories {
   Products Product[]
 }
 
-model StoreProfiles {
+model StoreUsers {
   id          String   @id @default(uuid())
   instance_id Int      @default(autoincrement())
-  profile_id  String
+  user_id     String
   store_id    String
   created_at  DateTime @default(now())
   role_id     String
 
-  Profile Profile @relation(fields: [profile_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  Store   Store   @relation(fields: [store_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  Role    Roles   @relation(fields: [role_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  User  User  @relation(fields: [user_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  Store Store @relation(fields: [store_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  Role  Roles @relation(fields: [role_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 }
 
 model StoreTypes {
@@ -194,7 +195,10 @@ model User {
   Authenticator Authenticator[]
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
-  Profile       Profile?
+  // Profile       Profile?        @relation(fields: [profileId], references: [id])
+  // profileId     String?
+  Cart          Cart[]
+  StoreUsers    StoreUsers[]
 }
 
 model Account {
