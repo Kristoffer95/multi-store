@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { getUserAction } from '@/actions/user';
 
 async function Header() {
-  const user = await getUserAction();
+  // const user = await getUserAction();
 
   return (
     <div className='py-2 md:pl-8 bg-background'>
@@ -25,8 +25,10 @@ async function Header() {
             <Link className='text-sm font-medium' href='/profile'>
               Profile
             </Link>
-
-            {user && Object.keys(user).length > 0 ? (
+            <Link className='text-sm font-medium' href='/api/auth/signin'>
+              Login
+            </Link>
+            {/* {user && Object.keys(u).length > 0 ? (
               <LogoutButton
                 signOut={async () => {
                   'use server';
@@ -37,7 +39,7 @@ async function Header() {
               <Link className='text-sm font-medium' href='/login'>
                 Login
               </Link>
-            )}
+            )} */}
 
             <ThemeToggleButton />
           </div>
